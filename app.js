@@ -25,10 +25,10 @@ let outPath = args[1];
 
 
 
-
+ startApp()
 cron.schedule('*/15 * * * * *', function () {
-    console.log(`searching files: ${getCurrentDateTime()}`);
-    startApp()
+    //console.log(`searching files: ${getCurrentDateTime()}`);
+   
 })
 
 function getCurrentDateTime() {
@@ -59,6 +59,7 @@ function moveFile(sourcePath, destinationFolder) {
             console.error(`Error moving file: ${err.message}`);
         } else {
             console.log(`File moved to ${destinationPath}`);
+            process.exit();
         }
     });
 }
@@ -67,39 +68,55 @@ function moveFile(sourcePath, destinationFolder) {
 function startApp() {
 
 
-    fs.readdir(inPath, (err, files) => {
-        if (err) {
-            console.error('Error reading folder:', err);
-            return;
-        }
+    // fs.readdir(inPath, (err, files) => {
+    //     if (err) {
+    //         console.error('Error reading folder:', err);
+    //         return;
+    //     }
 
-        let filePath;
-        let filePathPdf;
-        let fileExtension;
-        let ifProcess = false;
-        files.forEach(file => {
+    //     // let filePath;
+    //     // let filePathPdf;
+    //     // let fileExtension;
+    //     // let ifProcess = false;
+    //     // files.forEach(file => {
 
-            filePath = path.join(inPath, file);
-            fileExtension = path.extname(filePath);
-            if (fileExtension == '.pdf') {
-                filePathPdf = filePath;
-                ifProcess = true;
-            }else{
-                console.log(filePath + 'no pdf file')
-            }
+    //     //     filePath = path.join(inPath, file);
+    //     //     fileExtension = path.extname(filePath);
+    //     //     if (fileExtension == '.pdf') {
+    //     //         filePathPdf = filePath;
+    //     //         ifProcess = true;
+    //     //     }else{
+    //     //         console.log(filePath + 'no pdf file')
+    //     //     }
 
-            //htmlPdf(filePath)
-        })
+    //     //     //htmlPdf(filePath)
+    //     // })
+    //     // process.exit();
+    //     // return;
+    
+    //     // if(ifProcess){
+    //     //     htmlPdf(filePathPdf)
+    //     // }
+      
 
-        if(ifProcess){
-            htmlPdf(filePathPdf)
-        }
-
-        // TEST
-      // testHtml('HFAR2101398959.html')
+    //     // TEST
+    //   // testHtml('HFAR2101398959.html')
        
-    });
+    // });
 
+    console.log(inPath);
+
+    fs.access(inPath, fs.constants.F_OK, (err) => {
+        if (err) {
+          console.error(`File ${inPath} does not exist`);
+          process.exit();
+        } else {
+            htmlPdf(inPath)
+        }
+      });
+   // process.exit();
+   // return;
+   
 }
 
 async function testHtml(filePath) {
@@ -113,11 +130,10 @@ async function htmlPdf(filePath) {
     const fileNameWithoutExtensionNo = path.basename(filePath, path.extname(filePath)) ;
     let outpathHtml = outPath + '/' + fileNameWithoutExtension;
 
-    
+   
 
-
     
-    var client = new pdfcrowd.PdfToHtmlClient("uriiz2999", "229fc08e93147139371dcd09555e2f6d");
+    var client = new pdfcrowd.PdfToHtmlClient("uriiz29999", "6345db4fc749f4a438a94e7d259d5ab0");
     client.convertFileToFile(
         filePath,
         outpathHtml,
@@ -919,6 +935,7 @@ function htmlToJson(htmlPath, k,filePathRemove) {
     }
    
 
+    
     //NO.CNTS/PCKS
 
 
