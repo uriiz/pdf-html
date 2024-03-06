@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 const cheerio = require('cheerio');
 //console.log("Command line arguments:", args);
 //node app.js c:/inbox1
-//node app.js Users/uri/Desktop/uri/test.pdf
+//node app.js Users/uri/Desktop/uri/test.pdf Users/uri/Desktop/uri
 
 var pdfcrowd = require("pdfcrowd");
 
