@@ -4,10 +4,12 @@ const EmlParser = require('eml-parser');
 var cron = require('node-cron');
 const _ = require('lodash');
 const args = process.argv.slice(2);
-const pdf2html = require('pdf2html');
+
 const cheerio = require('cheerio');
 //console.log("Command line arguments:", args);
 //node app.js c:/inbox1
+//node app.js Users/uri/Desktop/uri/test.pdf
+
 var pdfcrowd = require("pdfcrowd");
 
 if (!args[0]) {
